@@ -2,26 +2,29 @@ body{
   padding: 2em;
 }
 
-table {
-  border-collapse: collapse;
+.board-row::after {
+  clear: both;
+  content: "";
+  display: table;
 }
 
-tr {
-  border: 1px solid;
-  height: 35px;
-  padding: 0;
-}
-
-td {
-  border: 1px solid;
-  width: 35px;
-  padding: 0;
-}
-
-.stone {
-  user-select: none;
+.cell {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
   font-size: 24pt;
-  line-height: 12pt;
+  font-weight: bold;
+  line-height: 35px;
+  height: 35px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 35px;
+}
+
+.cell:focus {
+  outline: none;
 }
 
 .container {

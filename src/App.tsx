@@ -17,7 +17,7 @@ const Cell = (props: { value: EnumCellState, onclick: (event: any) => void }) =>
     state === "none" ? "" : state === "white" ? "○" : "●";
 
   return (
-    <td className="stone" onClick={props.onclick}>{cell_state_to_string(props.value)}</td>
+    <button className="cell stone" onClick={props.onclick}>{cell_state_to_string(props.value)}</button >
   )
 }
 
@@ -33,6 +33,7 @@ const Board = () => {
     const cells = state.cells.slice();
     cells[x * ROWS + y] = state.gameState;
     setState({ ...state, cells: cells });
+
   }
 
   const renderCell = (x: number, y: number) => <Cell value={state.cells[x * ROWS + y]} onclick={() => handleCellClick(x, y)} />;
@@ -40,18 +41,18 @@ const Board = () => {
 
   const goban = [];
   for (let i = 0; i < ROWS; ++i) {
-    const cells = [];
+    const row_cells = [];
     for (let j = 0; j < COLUMNS; ++j) {
-      cells.push(renderCell(i, j));
+      row_cells.push(renderCell(i, j));
     }
-    goban.push(<tr>{cells}</tr>);
+    goban.push(<div className="board-row">{row_cells}</div>);
   }
 
   return (
     <div id="game" className="item">
-      <table id="goban">
+      <div id="goban">
         {goban}
-      </table>
+      </div>
     </div>
   )
 }
