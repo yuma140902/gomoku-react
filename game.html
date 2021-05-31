@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>五目並べ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js"></script>
+</head>
+
+<body onload="onload()">
+  <h1>五目並べ</h1>
+  <div id="game">
+    <table id="goban">
+    </table>
+  </div>
+  <div id="side">
+    <button onclick="restart()">RESTART</button>
+    <p id="turn">次は<span class="stone">○</span>の手番です</p>
+    <p id="winner" hidden><span class="stone"></span>が勝ちました</p>
+    <section>
+      <h1>遊び方</h1>
+      <ol>
+        <li>[RESTART]を押します</li>
+        <li>白黒を交互に打ちます</li>
+        <li>先に5つ縦横斜めのどこかに連続して並べたら勝利です</li>
+      </ol>
+    </section>
+  </div>
+</body>
+
+</html>
