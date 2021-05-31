@@ -14,12 +14,6 @@ td {
   padding: 0;
 }
 
-#game, #side {
-  box-sizing: border-box;
-  float: left;
-  width: 50%;
-}
-
 #game>table {
   background-image: url(img/tex.png);
 }
@@ -28,4 +22,20 @@ td {
   user-select: none;
   font-size: 24pt;
   line-height: 12pt;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+#game {
+  flex-grow: 1;
+}
+
+#side {
+  flex-grow: 3;
+  flex-basis: 30%;
 }
