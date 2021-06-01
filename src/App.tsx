@@ -19,8 +19,49 @@ function serializeIdx(x: number, y: number): number {
   return x * ROWS + y;
 }
 
-function judgeWinner(x: number, y: number): Winner {
-  return "none"
+function cell_or_default(goban: CellState[], x: number, y: number): CellState {
+  const idx = serializeIdx(x, y);
+  return (0 <= idx && idx < goban.length) ? goban[idx] : "none";
+}
+
+function judgeWinner(goban: CellState[], x: number, y: number, turn: Turn): Winner {
+  const x_orig = x;
+  const y_orig = y;
+  const directions = [
+    [1, 0],
+    [0, 1],
+    [1, 1],
+    [1, -1]
+  ];
+
+  let has_won = false;
+  for (const direction of directions) {
+
+    let count = 1;
+
+    let x = x_orig + direction[0];
+    let y = y_orig + direction[1];
+    while (cell_or_default(goban, x, y) === turn) {
+      x += direction[0];
+      y += direction[1];
+      ++count;
+    }
+
+    x = x_orig - direction[0];
+    y = y_orig - direction[1];
+    while (cell_or_default(goban, x, y) === turn) {
+      x -= direction[0];
+      y -= direction[1];
+      ++count;
+    }
+
+    if (count >= 5) {
+      has_won = true;
+      break;
+    };
+  }
+
+  return has_won ? turn : "none";
 }
 
 function cell_state_to_string(state: CellState): string {
@@ -61,8 +102,9 @@ const Board = () => {
     const cells = state.cells.slice();
     cells[serializeIdx(x, y)] = state.turn;
 
+
+    const winner = judgeWinner(cells, x, y, state.turn);
     const turn = toggleTurn(state.turn);
-    const winner = judgeWinner(x, y);
     const isFinished = winner !== "none";
 
     setState({ cells, turn, isFinished, winner });
