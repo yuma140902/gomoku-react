@@ -112,6 +112,15 @@ const Board = () => {
 
   const renderCell = (x: number, y: number) => <Cell value={state.cells[serializeIdx(x, y)]} onclick={() => handleCellClick(x, y)} />;
 
+  const restart = () => {
+    setState({
+      cells: Array<CellState>(ROWS * COLUMNS).fill("none"),
+      turn: "white",
+      isFinished: false,
+      winner: "none"
+    });
+  }
+
 
   const goban = [];
   for (let i = 0; i < ROWS; ++i) {
@@ -128,6 +137,7 @@ const Board = () => {
       <div id="goban">
         {goban}
       </div>
+      <button onClick={() => restart()}>RESTART</button>
     </div>
   )
 }
@@ -135,7 +145,6 @@ const Board = () => {
 const SideBar = () => {
   return (
     <div id="side" className="item">
-      <button /*onclick="restart()"*/>RESTART</button>
       <section>
         <h1>遊び方</h1>
         <ol>
