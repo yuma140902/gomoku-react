@@ -73,7 +73,7 @@ function stonize(state: BlackOrWhite | any): string {
 const Cell = (props: { value: Cell, onclick: (event: any) => void }) => {
 
   return (
-    <div className="cell" onClick={props.onclick}>{stonize(props.value)}</div>
+    <div className="cell stone" onClick={props.onclick}>{stonize(props.value)}</div>
   )
 }
 

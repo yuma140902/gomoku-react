@@ -2,25 +2,21 @@ body{
   padding: 2em;
 }
 
-.board-row::after {
-  clear: both;
-  content: "";
-  display: table;
+.board-row {
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .cell {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24pt;
-  font-weight: bold;
-  line-height: 35px;
-  height: 35px;
+  user-select: none;
+  background-color: #fff;
+  border: 1px solid #888;
   margin-right: -1px;
   margin-top: -1px;
-  padding: 0;
+  line-height: 30pt;
+  height: 30pt;
+  width: 30pt;
   text-align: center;
-  width: 35px;
 }
 
 .cell:focus {
