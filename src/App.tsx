@@ -5,11 +5,13 @@ import './App.css';
 const ROWS = 10;
 const COLUMNS = 10;
 
-type CellState = "none" | "white" | "black";
-type Winner = CellState;
-type Turn = "white" | "black";
+type BlackOrWhite = "white" | "black";
+type Cell = BlackOrWhite | "none";
+type Winner = BlackOrWhite | "none";
+type Turn = BlackOrWhite;
+
 interface BoardState {
-  cells: CellState[],
+  cells: Cell[],
   turn: Turn,
   isFinished: boolean,
   winner: Winner
@@ -19,12 +21,12 @@ function serializeIdx(x: number, y: number): number {
   return x * ROWS + y;
 }
 
-function cell_or_default(goban: CellState[], x: number, y: number): CellState {
+function cellOrNone(goban: Cell[], x: number, y: number): Cell {
   const idx = serializeIdx(x, y);
   return (0 <= idx && idx < goban.length) ? goban[idx] : "none";
 }
 
-function judgeWinner(goban: CellState[], x: number, y: number, turn: Turn): Winner {
+function judgeWinner(goban: Cell[], x: number, y: number, turn: Turn): Winner {
   const x_orig = x;
   const y_orig = y;
   const directions = [
@@ -41,7 +43,7 @@ function judgeWinner(goban: CellState[], x: number, y: number, turn: Turn): Winn
 
     let x = x_orig + direction[0];
     let y = y_orig + direction[1];
-    while (cell_or_default(goban, x, y) === turn) {
+    while (cellOrNone(goban, x, y) === turn) {
       x += direction[0];
       y += direction[1];
       ++count;
@@ -49,7 +51,7 @@ function judgeWinner(goban: CellState[], x: number, y: number, turn: Turn): Winn
 
     x = x_orig - direction[0];
     y = y_orig - direction[1];
-    while (cell_or_default(goban, x, y) === turn) {
+    while (cellOrNone(goban, x, y) === turn) {
       x -= direction[0];
       y -= direction[1];
       ++count;
@@ -64,14 +66,14 @@ function judgeWinner(goban: CellState[], x: number, y: number, turn: Turn): Winn
   return has_won ? turn : "none";
 }
 
-function cell_state_to_string(state: CellState): string {
-  return state === "none" ? "" : state === "white" ? "○" : "●";
+function stonize(state: BlackOrWhite | any): string {
+  return state === "white" ? "○" : state === "black" ? "●" : "";
 }
 
-const Cell = (props: { value: CellState, onclick: (event: any) => void }) => {
+const Cell = (props: { value: Cell, onclick: (event: any) => void }) => {
 
   return (
-    <button className="cell stone" onClick={props.onclick}>{cell_state_to_string(props.value)}</button >
+    <button className="cell stone" onClick={props.onclick}>{stonize(props.value)}</button >
   )
 }
 
@@ -79,8 +81,8 @@ const StatusBox = (props: { turn: Turn, isFinished: boolean, winner: Winner }) =
   return (
     <div>
       {!props.isFinished
-        ? <p id="turn">次は<span className="stone">{cell_state_to_string(props.turn)}</span>の手番です</p>
-        : <p id="winner"><span className="stone">{cell_state_to_string(props.winner)}</span>が勝ちました</p>}
+        ? <p>次は<span className="stone">{stonize(props.turn)}</span>の手番です</p>
+        : <p><span className="stone">{stonize(props.winner)}</span>が勝ちました</p>}
     </div>
   )
 }
@@ -88,7 +90,7 @@ const StatusBox = (props: { turn: Turn, isFinished: boolean, winner: Winner }) =
 const Board = () => {
 
   const [state, setState] = useState<BoardState>({
-    cells: Array<CellState>(ROWS * COLUMNS).fill("none"),
+    cells: Array<Cell>(ROWS * COLUMNS).fill("none"),
     turn: "white",
     isFinished: false,
     winner: "none"
@@ -114,7 +116,7 @@ const Board = () => {
 
   const restart = () => {
     setState({
-      cells: Array<CellState>(ROWS * COLUMNS).fill("none"),
+      cells: Array<Cell>(ROWS * COLUMNS).fill("none"),
       turn: "white",
       isFinished: false,
       winner: "none"
@@ -134,7 +136,7 @@ const Board = () => {
   return (
     <div id="game" className="item">
       <StatusBox turn={state.turn} isFinished={state.isFinished} winner={state.winner} />
-      <div id="goban">
+      <div>
         {goban}
       </div>
       <button onClick={() => restart()}>RESTART</button>
