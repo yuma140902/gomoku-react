@@ -23,12 +23,24 @@ function judgeWinner(x: number, y: number): Winner {
   return "none"
 }
 
+function cell_state_to_string(state: CellState): string {
+  return state === "none" ? "" : state === "white" ? "○" : "●";
+}
+
 const Cell = (props: { value: CellState, onclick: (event: any) => void }) => {
-  const cell_state_to_string = (state: CellState): string =>
-    state === "none" ? "" : state === "white" ? "○" : "●";
 
   return (
     <button className="cell stone" onClick={props.onclick}>{cell_state_to_string(props.value)}</button >
+  )
+}
+
+const StatusBox = (props: { turn: Turn, isFinished: boolean, winner: Winner }) => {
+  return (
+    <div>
+      {!props.isFinished
+        ? <p id="turn">次は<span className="stone">{cell_state_to_string(props.turn)}</span>の手番です</p>
+        : <p id="winner"><span className="stone">{cell_state_to_string(props.winner)}</span>が勝ちました</p>}
+    </div>
   )
 }
 
@@ -70,6 +82,7 @@ const Board = () => {
 
   return (
     <div id="game" className="item">
+      <StatusBox turn={state.turn} isFinished={state.isFinished} winner={state.winner} />
       <div id="goban">
         {goban}
       </div>
@@ -81,8 +94,6 @@ const SideBar = () => {
   return (
     <div id="side" className="item">
       <button /*onclick="restart()"*/>RESTART</button>
-      <p id="turn">次は<span className="stone">○</span>の手番です</p>
-      <p id="winner" hidden><span className="stone"></span>が勝ちました</p>
       <section>
         <h1>遊び方</h1>
         <ol>
