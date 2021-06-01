@@ -5,15 +5,21 @@ import './App.css';
 const ROWS = 10;
 const COLUMNS = 10;
 
-type EnumCellState = "none" | "white" | "black";
-type EnumGameState = "white" | "black" | "finished";
+type CellState = "none" | "white" | "black";
+type Winner = CellState;
+type Turn = "white" | "black";
 interface BoardState {
-  cells: EnumCellState[],
-  gameState: EnumGameState
+  cells: CellState[],
+  turn: Turn,
+  isFinished: boolean
 }
 
-const Cell = (props: { value: EnumCellState, onclick: (event: any) => void }) => {
-  const cell_state_to_string = (state: EnumCellState): string =>
+function serializeIdx(x: number, y: number): number {
+  return x * ROWS + y;
+}
+
+const Cell = (props: { value: CellState, onclick: (event: any) => void }) => {
+  const cell_state_to_string = (state: CellState): string =>
     state === "none" ? "" : state === "white" ? "○" : "●";
 
   return (
@@ -24,19 +30,22 @@ const Cell = (props: { value: EnumCellState, onclick: (event: any) => void }) =>
 const Board = () => {
 
   const [state, setState] = useState<BoardState>({
-    cells: Array<EnumCellState>(ROWS * COLUMNS).fill("none"),
-    gameState: "white"
+    cells: Array<CellState>(ROWS * COLUMNS).fill("none"),
+    turn: "white",
+    isFinished: false
   });
 
-  const handleCellClick = (x: number, y: number) => {
-    if (state.gameState == "finished") return;
-    const cells = state.cells.slice();
-    cells[x * ROWS + y] = state.gameState;
-    setState({ ...state, cells: cells });
+  const toggleTurn = (turn: Turn): Turn =>
+    turn === "white" ? "black" : "white";
 
+  const handleCellClick = (x: number, y: number) => {
+    if (state.isFinished || state.cells[serializeIdx(x, y)] !== "none") return;
+    const cells = state.cells.slice();
+    cells[serializeIdx(x, y)] = state.turn;
+    setState({ ...state, cells: cells, turn: toggleTurn(state.turn) });
   }
 
-  const renderCell = (x: number, y: number) => <Cell value={state.cells[x * ROWS + y]} onclick={() => handleCellClick(x, y)} />;
+  const renderCell = (x: number, y: number) => <Cell value={state.cells[serializeIdx(x, y)]} onclick={() => handleCellClick(x, y)} />;
 
 
   const goban = [];
