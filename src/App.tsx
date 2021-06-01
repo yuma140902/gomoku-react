@@ -11,11 +11,16 @@ type Turn = "white" | "black";
 interface BoardState {
   cells: CellState[],
   turn: Turn,
-  isFinished: boolean
+  isFinished: boolean,
+  winner: Winner
 }
 
 function serializeIdx(x: number, y: number): number {
   return x * ROWS + y;
+}
+
+function judgeWinner(x: number, y: number): Winner {
+  return "none"
 }
 
 const Cell = (props: { value: CellState, onclick: (event: any) => void }) => {
@@ -32,7 +37,8 @@ const Board = () => {
   const [state, setState] = useState<BoardState>({
     cells: Array<CellState>(ROWS * COLUMNS).fill("none"),
     turn: "white",
-    isFinished: false
+    isFinished: false,
+    winner: "none"
   });
 
   const toggleTurn = (turn: Turn): Turn =>
@@ -42,7 +48,12 @@ const Board = () => {
     if (state.isFinished || state.cells[serializeIdx(x, y)] !== "none") return;
     const cells = state.cells.slice();
     cells[serializeIdx(x, y)] = state.turn;
-    setState({ ...state, cells: cells, turn: toggleTurn(state.turn) });
+
+    const turn = toggleTurn(state.turn);
+    const winner = judgeWinner(x, y);
+    const isFinished = winner !== "none";
+
+    setState({ cells, turn, isFinished, winner });
   }
 
   const renderCell = (x: number, y: number) => <Cell value={state.cells[serializeIdx(x, y)]} onclick={() => handleCellClick(x, y)} />;
