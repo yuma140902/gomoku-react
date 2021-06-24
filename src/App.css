@@ -55,6 +55,11 @@ body{
   flex-grow: 1;
 }
 
+#goban {
+  margin: 1em;
+  margin-left: 0;
+}
+
 #side {
   flex-grow: 3;
   flex-basis: 30%;

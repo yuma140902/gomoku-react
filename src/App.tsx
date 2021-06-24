@@ -142,7 +142,7 @@ const Board = () => {
   return (
     <div id="game" className="item">
       <StatusBox turn={state.turn} isFinished={state.isFinished} winner={state.winner} />
-      <div>
+      <div id="goban">
         {goban}
       </div>
       <button onClick={() => restart()}>RESTART</button>
