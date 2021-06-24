@@ -66,14 +66,20 @@ function judgeWinner(goban: Cell[], x: number, y: number, turn: Turn): Winner {
   return has_won ? turn : "none";
 }
 
-function stonize(state: BlackOrWhite | any): string {
-  return state === "white" ? "○" : state === "black" ? "●" : "";
+const StoneSvg = (props: { value: BlackOrWhite | any }) => {
+  if (props.value !== "white" && props.value !== "black") return null;
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="30" fill={props.value} stroke="black" stroke-width="5"></circle>
+    </svg>
+  );
 }
 
 const Cell = (props: { value: Cell, onclick: (event: any) => void }) => {
-
   return (
-    <div className="cell stone" onClick={props.onclick}>{stonize(props.value)}</div>
+    <div className="cell-wrapper">
+      <div className="cell" onClick={props.onclick}><StoneSvg value={props.value} /></div>
+    </div >
   )
 }
 
@@ -81,8 +87,8 @@ const StatusBox = (props: { turn: Turn, isFinished: boolean, winner: Winner }) =
   return (
     <div>
       {!props.isFinished
-        ? <p>次は<span className="stone">{stonize(props.turn)}</span>の手番です</p>
-        : <p><span className="stone">{stonize(props.winner)}</span>が勝ちました</p>}
+        ? <p>次は<div className="inline-stone"><StoneSvg value={props.turn} /></div>の手番です</p>
+        : <p><div className="inline-stone"><StoneSvg value={props.winner} /></div>が勝ちました</p>}
     </div>
   )
 }
