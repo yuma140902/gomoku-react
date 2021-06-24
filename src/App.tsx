@@ -75,7 +75,7 @@ const StoneSvg = (props: { value: BlackOrWhite | any }) => {
   );
 }
 
-const Cell = (props: { value: Cell, onclick: (event: any) => void }) => {
+const CellElm = (props: { value: Cell, onclick: (event: any) => void }) => {
   return (
     <div className="cell-wrapper">
       <div className="cell" onClick={props.onclick}><StoneSvg value={props.value} /></div>
@@ -118,7 +118,7 @@ const Board = () => {
     setState({ cells, turn, isFinished, winner });
   }
 
-  const renderCell = (x: number, y: number) => <Cell value={state.cells[serializeIdx(x, y)]} onclick={() => handleCellClick(x, y)} />;
+  const renderCell = (x: number, y: number) => <CellElm value={state.cells[serializeIdx(x, y)]} onclick={() => handleCellClick(x, y)} />;
 
   const restart = () => {
     setState({
