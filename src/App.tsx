@@ -88,7 +88,7 @@ const StatusBox = (props: { turn: Turn, isFinished: boolean, winner: Winner }) =
     <div>
       {!props.isFinished
         ? <p>次は<div className="inline-stone"><StoneSvg value={props.turn} /></div>の手番です</p>
-        : <p><div className="inline-stone"><StoneSvg value={props.winner} /></div>が勝ちました</p>}
+        : <p>&nbsp;<div className="inline-stone"><StoneSvg value={props.winner} /></div>が勝ちました</p>}
     </div>
   )
 }
