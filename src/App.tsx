@@ -156,7 +156,6 @@ const SideBar = () => {
       <section>
         <h1>遊び方</h1>
         <ol>
-          <li>[RESTART]を押します</li>
           <li>白黒を交互に打ちます</li>
           <li>先に5つ縦横斜めのどこかに連続して並べたら勝利です</li>
         </ol>
