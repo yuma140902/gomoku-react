@@ -1,4 +1,9 @@
-body{
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
   padding: 2em;
 }
 
@@ -63,4 +68,20 @@ body{
 #side {
   flex-grow: 3;
   flex-basis: 30%;
+}
+
+.icons {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+.icon {
+  margin: 2px;
+  height: 2em;
+  width: auto;
+}
+
+.react-icon {
+  background-color: #222;
 }

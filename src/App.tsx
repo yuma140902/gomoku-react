@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import githubIcon from './github.png';
+import reactIcon from './react.png';
 
 
 const ROWS = 10;
@@ -171,6 +173,10 @@ function App() {
       <div className="container">
         <Board />
         <SideBar />
+      </div>
+      <div className="icons">
+        <img src={reactIcon} alt="React" className="icon react-icon" />
+        <a href="https://github.com/yuma140902/gomoku-react"><img src={githubIcon} alt="Github" className="icon" /></a>
       </div>
     </div>
   );
