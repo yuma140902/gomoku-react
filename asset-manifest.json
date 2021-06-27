@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/gomoku-react/static/css/main.64c9c647.chunk.css",
-    "main.js": "/gomoku-react/static/js/main.e4fb15b6.chunk.js",
-    "main.js.map": "/gomoku-react/static/js/main.e4fb15b6.chunk.js.map",
+    "main.js": "/gomoku-react/static/js/main.05c3b356.chunk.js",
+    "main.js.map": "/gomoku-react/static/js/main.05c3b356.chunk.js.map",
     "runtime-main.js": "/gomoku-react/static/js/runtime-main.1a6e16ea.js",
     "runtime-main.js.map": "/gomoku-react/static/js/runtime-main.1a6e16ea.js.map",
     "static/js/2.2bbc38ba.chunk.js": "/gomoku-react/static/js/2.2bbc38ba.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.1a6e16ea.js",
     "static/js/2.2bbc38ba.chunk.js",
     "static/css/main.64c9c647.chunk.css",
-    "static/js/main.e4fb15b6.chunk.js"
+    "static/js/main.05c3b356.chunk.js"
   ]
 }
